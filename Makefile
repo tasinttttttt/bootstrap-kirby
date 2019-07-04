@@ -1,7 +1,7 @@
 URL=localhost:8888
 JS_PROCESSOR = npx rollup
 CSS_PROCESSOR = sass
-PHP_SERVER = php -S ${URL} 
+PHP_SERVER = php -S ${URL} kirby/router.php 
 
 SRC_FOLDER =./src
 BUILD_FOLDER = ./www
