@@ -1,4 +1,4 @@
-## Kirby3 bootstrap
+## Kirby bootstrap
 
 Commands and configuration files to speed things up.
 
