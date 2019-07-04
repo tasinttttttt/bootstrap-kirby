@@ -25,7 +25,7 @@ make
 make build
 ```
 
-### Compile and watch js and sass
+### Compile and watch js and sass, starts a php server `http://localhost:8888`
 ```sh
 make dev
 ```
