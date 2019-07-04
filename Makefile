@@ -31,20 +31,19 @@ dev:
 	@ test -d ${VAR_FOLDER} && echo "\n  \033[2m${VAR_FOLDER} is set\033[0m" || (echo "\n  \033[2mCreating ${VAR_FOLDER}\033[0m" && mkdir ${VAR_FOLDER}) 
 	@ nohup ${JS_PROCESSOR} ${JS_SOURCE} --file ${JS_COMPILED} --format iife -w > ${UTILITY_JS_LOG} 2>&1 & (test -f ${UTILITY_PROCESSES} && (echo $$! >> ${UTILITY_PROCESSES}) || (echo $$! > ${UTILITY_PROCESSES}))
 	@ nohup ${CSS_PROCESSOR} --watch ${CSS_SOURCE}:${CSS_COMPILED} > ${UTILITY_CSS_LOG} 2>&1 & echo $$! >> ${UTILITY_PROCESSES}
-	@ test -d ${BUILD_FOLDER} && ((nohup ${PHP_SERVER} > ${UTILITY_PHP_LOG} 2>&1 & echo $$! >> ${UTILITY_PROCESSES}) && echo "  Serving at \033[96m${URL}\033[0m") || echo "  \033[2mNo ${BUILD_FOLDER}\033[0m folder, not starting the server"
+	@ test -d ${BUILD_FOLDER} && (cd ${BUILD_FOLDER}; (nohup ${PHP_SERVER} > ../${UTILITY_PHP_LOG} 2>&1 & echo $$! >> ../${UTILITY_PROCESSES} && echo "  Serving at \033[96m${URL}\033[0m")) || echo "  \033[2mNo ${BUILD_FOLDER}\032[0m folder, not starting the server"
 	@ touch ${UTILITY_ISWATCHING}
 	@ echo "  \033[96mWatching js and css"
 
 stop:
 	@ echo "\n  Stopping js and css watch..."
 	@ test -f ${UTILITY_ISWATCHING} && while read line; do kill $$line;done < ${UTILITY_PROCESSES} || echo "  \033[2mWas not watching\033[0m" 
-	@ rm -rf ${VAR_FOLDER}
 	@ echo "  \033[92mDone!\033[0m"
 
 install:
 	@ echo "  Install Kirby? [y/n]";\
 	read answer; \
-	[[ "$$answer" != "$${answer#[Yy]}" ]] && git clone https://github.com/getkirby/starterkit.git www || echo "  Ok, nothing to do here."
+	[[ "$$answer" != "$${answer#[Yy]}" ]] && git clone https://github.com/getkirby/plainkit.git www || echo "  Ok, nothing to do here."
 	@ echo "  \033[92mDone!\033[0m"
 
 uninstall:
