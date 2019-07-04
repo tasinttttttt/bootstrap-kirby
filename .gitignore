@@ -1,0 +1,75 @@
+# System files
+# ------------
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+
+# Temporary files
+# ---------------
+var
+var/*
+www/media/*
+!www/media/index.html
+
+# Runtime data 
+# ---------------
+pids
+*.pid
+*.seed
+
+# Cache Files
+# ---------------
+
+www/site/cache/*
+!www/site/cache/index.html
+
+# Accounts
+# ---------------
+
+www/site/accounts/*
+!www/site/accounts/index.html
+
+# Sessions
+# ---------------
+
+www/site/sessions/*
+!www/site/sessions/index.html
+
+# License
+# ---------------
+www/site/config/.license
+
+# PHP
+# ---------------
+php-error.log*
+*.php_cs.cache
+
+## Workflow & Editor
+# ---------------
+.vscode
+.eslintcache
+.stylelintcache
+*.sublime-project
+*.sublime-workspace
+stats.json
+
+# Node
+# ---------------
+.lock-wscript
+node_modules
+.tmp
+logs
+*.log
+npm-debug.log*
