@@ -28,28 +28,21 @@ build:
 	@ ${CSS_PROCESSOR} ${CSS_SOURCE}:${CSS_COMPILED}
 
 dev: 
-	@ test -d ${VAR_FOLDER} && echo "\n  \033[2m${VAR_FOLDER} is set\033[0m" || (echo "\n  \033[2mCreating ${VAR_FOLDER}\033[0m" && mkdir ${VAR_FOLDER}) 
-	@ nohup ${JS_PROCESSOR} ${JS_SOURCE} --file ${JS_COMPILED} --format iife -w > ${UTILITY_JS_LOG} 2>&1 & (test -f ${UTILITY_PROCESSES} && (echo $$! >> ${UTILITY_PROCESSES}) || (echo $$! > ${UTILITY_PROCESSES}))
-	@ nohup ${CSS_PROCESSOR} --watch ${CSS_SOURCE}:${CSS_COMPILED} > ${UTILITY_CSS_LOG} 2>&1 & echo $$! >> ${UTILITY_PROCESSES}
-	@ test -d ${BUILD_FOLDER} && (cd ${BUILD_FOLDER}; (nohup ${PHP_SERVER} > ../${UTILITY_PHP_LOG} 2>&1 & echo $$! >> ../${UTILITY_PROCESSES} && echo "  Serving at \033[96m${URL}\033[0m")) || echo "  \033[2mNo ${BUILD_FOLDER}\032[0m folder, not starting the server"
-	@ touch ${UTILITY_ISWATCHING}
-	@ echo "  \033[96mWatching js and css"
+	@ if [ -d ${VAR_FOLDER} ]; then echo "\n  \033[2m${VAR_FOLDER} is set\033[0m"; else echo "\n  \033[2mCreating ${VAR_FOLDER}\033[0m" && mkdir ${VAR_FOLDER}; fi
+	@ if [ ! -f ${UTILITY_ISWATCHING} ]; then (nohup ${JS_PROCESSOR} ${JS_SOURCE} --file ${JS_COMPILED} --format iife -w > ${UTILITY_JS_LOG} 2>&1 & (if [ -f ${UTILITY_PROCESSES} ]; then echo $$! >> ${UTILITY_PROCESSES}; else echo $$! > ${UTILITY_PROCESSES}; fi)) && echo "  \033[96mWatching javascript"; fi
+	@ if [ ! -f ${UTILITY_ISWATCHING} ]; then (nohup ${CSS_PROCESSOR} --watch ${CSS_SOURCE}:${CSS_COMPILED} > ${UTILITY_CSS_LOG} 2>&1 & echo $$! >> ${UTILITY_PROCESSES}) && echo "  \033[96mWatching css"; fi
+	@ if [ ! -f ${UTILITY_ISWATCHING} ]; then (if [ ! -d ${BUILD_FOLDER} ]; then  echo "  \033[2mNo ${BUILD_FOLDER}\032[0m folder, not starting the server"; else (cd ${BUILD_FOLDER}; (nohup ${PHP_SERVER} > ../${UTILITY_PHP_LOG} 2>&1 & echo $$! >> ../${UTILITY_PROCESSES})) && echo "  Serving at \033[96m${URL}\033[0m";fi); fi; 
+	@ if [ -f ${UTILITY_ISWATCHING} ]; then echo "  Already watching..."; else touch ${UTILITY_ISWATCHING}; fi
 
 stop:
-	@ echo "\n  Stopping js and css watch..."
-	@ test -f ${UTILITY_ISWATCHING} && while read line; do kill $$line;done < ${UTILITY_PROCESSES} || echo "  \033[2mWas not watching\033[0m" 
-	@ echo "  \033[92mDone!\033[0m"
+	@ if [ ! -f ${UTILITY_ISWATCHING} ]; then echo "\n  Was not watching"; else (echo "\n  Stopping js and css watch..." && (while read line; do kill $$line;done < ${UTILITY_PROCESSES}); rm ${UTILITY_ISWATCHING} ${UTILITY_PROCESSES}; echo "  \033[92mDone!\033[0m"); fi 
 
 install:
-	@ echo "  Install Kirby? [y/n]";\
-	read answer; \
-	[[ "$$answer" != "$${answer#[Yy]}" ]] && git clone https://github.com/getkirby/plainkit.git www || echo "  Ok, nothing to do here."
+	@ echo "  Install Kirby? [y/n]"; read answer; [[ "$$answer" != "$${answer#[Yy]}" ]] && git clone https://github.com/getkirby/plainkit.git www || echo "  Ok, nothing to do here."
 	@ echo "  \033[92mDone!\033[0m"
 
 uninstall:
-	@ echo "  Uninstall Kirby? [y/n]";\
-	read answer; \
-	[[ "$$answer" != "$${answer#[Yy]}" ]] && rm -rf ${BUILD_FOLDER} || echo "  Ok, nothing to do here."
+	@ echo "  Uninstall Kirby? [y/n]"; read answer; [[ "$$answer" != "$${answer#[Yy]}" ]] && rm -rf ${BUILD_FOLDER} || echo "  Ok, nothing to do here."
 	@ echo "  \033[92mDone!\033[0m"
 
 clean: stop 
