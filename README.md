@@ -21,6 +21,7 @@ Project structure
 #### First step:
 
 ```sh
+git clone --recurse-submodules --remote-submodules
 npm install
 ```
 
