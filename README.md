@@ -1,10 +1,10 @@
-## Kirby bootstrap
+## Kirby 3 bootstrap
 
 Commands and configuration files to speed things up.
 
 ## Project
 
-Requirements: `git, npm, sass`
+Requirements: `git, node`
 
 Project structure
 
@@ -17,41 +17,19 @@ Project structure
 └── src
 ```
 
+## Installation
+```sh
+npm install
+```
+
 ## Commands
 
-### Compile js and sass
+### Development starts a php server `http://localhost:8000` (edit port in `.rollup.config.js`)
 ```sh
-make
-make build
+npm run dev
 ```
 
-### Compile and watch js and sass, starts a php server `http://localhost:8888`
+### Build
 ```sh
-make dev
-```
-
-### Stop js and sass watch
-```sh
-make stop
-```
-
-### Install Kirby
-```sh
-make install
-```
-
-### Uninstall Kirby
-```sh
-make uninstall
-```
-
-### Stop watch, delete compiled js and css files. 
-```sh
-make clean
-make fclean
-```
-
-### Delete everything and recompile
-```sh
-make re
+npm run build
 ```

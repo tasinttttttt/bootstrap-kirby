@@ -22,8 +22,9 @@ var
 var/*
 www/media/*
 !www/media/index.html
+.lock
 
-# Runtime data 
+# Runtime data
 # ---------------
 pids
 *.pid
@@ -73,3 +74,10 @@ node_modules
 logs
 *.log
 npm-debug.log*
+
+# Custom
+# ---------------
+www/assets/style
+www/assets/bundle*
+www/assets/*.js
+www/assets/*.css
