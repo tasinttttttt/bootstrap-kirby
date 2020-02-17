@@ -10,26 +10,35 @@ Project structure
 
 ```
 .
-├── .editorconfig
-├── .gitignore
-├── Makefile
-├── README.md
-└── src
+├── ...
+├── rollup.config.js # Configuration
+├── www # Website content
+└── src # Source files
 ```
 
 ## Installation
+
+#### First step:
+
 ```sh
 npm install
 ```
 
+#### Second step:
+Create `www/assets` folder.
+
+Add `<link rel="stylesheet" type="text/css" href="assets/bundle.css">` to the head part of your template.
+
+And `<script src="assets/bundle.js"></script>` to your template.
+
 ## Commands
 
-### Development starts a php server `http://localhost:8000` (edit port in `.rollup.config.js`)
+#### Development starts a php server `http://localhost:8000`
 ```sh
 npm run dev
 ```
 
-### Build
+#### Build
 ```sh
 npm run build
 ```
