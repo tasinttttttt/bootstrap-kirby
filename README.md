@@ -25,8 +25,22 @@ git clone --recurse-submodules --remote-submodules
 npm install
 ```
 
+If you wish to merge kirby into your repo:
+
+```
+# 1. Remove reference to www submodule in .gitmodules and .git/config
+vim .git/config
+vim .gitmodules
+
+# 2. Remove the submodule from cache
+git rm --cached www
+
+# 3. Add www as part of the repo
+git add www
+git commit -m "Merge www"
+```
+
 #### Second step:
-Create `www/assets` folder.
 
 Add `<link rel="stylesheet" type="text/css" href="assets/bundle.css">` to the head part of your template.
 
